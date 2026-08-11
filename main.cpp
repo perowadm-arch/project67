@@ -1,24 +1,31 @@
+//main.cpp
+
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 #include <iostream>
+#include "Prog.h"
 
 using namespace sf;
 using namespace std;
+
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1280, 750), "Supermassive Black Hole");
+    
+    try {
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        Program prog;
 
-        window.clear();
-        //window.draw();
-        window.display();
+        prog.start();
+
+    }
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+        return 1;
+    }
+    catch (...) {
+        cerr << "Unknown error!" << endl;
+        return 1;
     }
 
     return 0;

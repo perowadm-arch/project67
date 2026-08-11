@@ -1,3 +1,5 @@
+//BH.h
+
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -8,12 +10,13 @@ class BlackHole {
 public:
 	Sprite sprite;
 	FloatRect rect;
-	bool pause = false;
+	bool pause;
 	float currframe;
 
+	BlackHole();
 	BlackHole(Texture& image);
 
-	void update(float time);
+	//void update(float time);
 
 	void anim(float time);
 };
