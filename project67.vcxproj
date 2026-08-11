@@ -130,6 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="BHConfig.cpp" />
+    <ClCompile Include="ProgConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BH.h" />
+    <ClInclude Include="Prog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
