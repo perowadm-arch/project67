@@ -18,7 +18,7 @@ Program::~Program() {
 }
 
 bool Program::loadtxs() {
-    if (!t.loadFromFile("SMBH/BLH.png")) {
+    if (!t.loadFromFile("SMBH/BLH3.png")) {
         throw runtime_error("failed to load BLH.png!");
     }
     t.setSmooth(false);

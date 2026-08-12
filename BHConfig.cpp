@@ -10,20 +10,20 @@ BlackHole::BlackHole() {};
 
 BlackHole::BlackHole(Texture& image) {
     sprite.setTexture(image);
-    sprite.setTextureRect(IntRect(0, 0, 512, 512));
-    sprite.setScale(2.f, 2.f);
-    sprite.setPosition(100, 500);
+    sprite.setTextureRect(IntRect(0, 0, 128, 128));
+    sprite.setScale(4.f,4.f);
+    sprite.setPosition(100, 100);
 
     currframe = 0;
     pause = false;
 }; 
 
 void BlackHole::anim(float time) {
-    currframe += 3 * time; //движение 
+    currframe += 1 * time; //движение 
 
-    if (currframe > 2) { //анимация
-        currframe -= 2;
+    if (currframe > 3) { //анимация
+        currframe -= 3;
     }
 
-    sprite.setTextureRect(IntRect(512 * int(currframe), 0, 512, 512));
+    sprite.setTextureRect(IntRect(128 * int(currframe), 0, 128, 128));
 }
