@@ -6,24 +6,52 @@
 using namespace sf;
 using namespace std;
 
-BlackHole::BlackHole() {};
-
-BlackHole::BlackHole(Texture& image) {
-    sprite.setTexture(image);
-    sprite.setTextureRect(IntRect(0, 0, 128, 128));
-    sprite.setScale(4.f,4.f);
-    sprite.setPosition(100, 100);
-
-    currframe = 0;
-    pause = false;
-}; 
-
-void BlackHole::anim(float time) {
-    currframe += 1 * time; //движение 
-
-    if (currframe > 3) { //анимаци€
-        currframe -= 3;
+BlackHole::BlackHole() {
+    particles = new VertexArray(Points, 1000);
+    for (int i = 0; i < 1000; i++) {
+        (*particles)[i].position = Vector2f(700, 370);
+        (*particles)[i].color = Color::White;
     }
 
-    sprite.setTextureRect(IntRect(128 * int(currframe), 0, 128, 128));
+    Blh.setRadius(100.f);
+    Blh.setOrigin(100.f, 100.f); // “очка прив€зки в центре круга
+    Blh.setPosition(400.f, 370.f);
+    Blh.setFillColor(Color::Black);
+    Blh.setOutlineColor(Color::White);
+    Blh.setOutlineThickness(1.f);
+}; 
+
+BlackHole::~BlackHole() {
+    delete particles;
+};
+
+void BlackHole::att(VertexArray* partcs) {
+    Vector2f center = Blh.getPosition();
+
+    for (int i = 0; i < partcs->getVertexCount(); i++) {
+
+        Vector2f pos = (*partcs)[i].position;
+
+        // Ќаходим разницу координат между частицей и центром
+        float dx = center.x - pos.x;
+        float dy = center.y - pos.y;
+
+        // —читаем точное рассто€ние (гипотенузу)
+        float dist = sqrt(dx * dx + dy * dy);
+
+
+        
+    }
+}
+
+void BlackHole::phys(float time) {
+    Blh.rotate(10 * time);
+
+    float speed = 1.f;
+
+    for (int i = 0; i < 1000; i++) {
+        att(particles);
+        (*particles)[i].position.y += speed * time;
+        (*particles)[i].position.x += speed * time;
+    }
 }

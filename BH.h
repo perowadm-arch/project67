@@ -8,15 +8,16 @@ using namespace std;
 
 class BlackHole {
 public:
-	Sprite sprite;
-	FloatRect rect;
 	bool pause;
 	float currframe;
+	VertexArray* particles = nullptr;
+	CircleShape Blh;
 
 	BlackHole();
-	BlackHole(Texture& image);
+	~BlackHole();
 
 	//void update(float time);
 
-	void anim(float time);
+	void phys(float time);
+	void att(VertexArray* partcs);
 };

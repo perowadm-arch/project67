@@ -9,27 +9,19 @@ using namespace std;
 
 Program::Program(){
 	window.create(VideoMode(wwidth, wheight), "Supermassive Black Hole");
-    loadtxs();
-    BH = new BlackHole(t);
+    BH = new BlackHole;
 }
 
 Program::~Program() {
     delete BH;
 }
 
-bool Program::loadtxs() {
-    if (!t.loadFromFile("SMBH/BLH3.png")) {
-        throw runtime_error("failed to load BLH.png!");
-    }
-    t.setSmooth(false);
-
-    return true;
-}
-
 void Program::drawall() {
 	window.clear();
     if (BH != nullptr) {
-        window.draw(BH->sprite);
+        window.draw(BH->Blh);
+        window.draw(*(BH->particles));
+
     }
 	window.display();
 }
@@ -47,7 +39,7 @@ void Program::start() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        BH->anim(time);
+        BH->phys(time);
         drawall();
     }
 

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "BH.h"
+#include "Menu.h"
 using namespace sf;
 using namespace std;
 
@@ -12,16 +13,17 @@ public:
 
 	int wheight = 750;
 	int wwidth = 1280;
+
+	float panelWidth = 280.f;
+
 	RenderWindow window;
 	Clock clock;
-	Texture t;
 
 	BlackHole* BH = nullptr;
 
 	Program();
 	~Program();
 
-	bool loadtxs();
 	void drawall();
 	void start();
 

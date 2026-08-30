@@ -1,7 +1,8 @@
-//Mouse2Config.cpp
+//ParticlesConfig.cpp
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Mouse2.h"
+#include "Particles.h"
 using namespace sf;
 using namespace std;
+
