@@ -10,14 +10,14 @@ class BlackHole {
 public:
 	bool pause;
 	float currframe;
-	VertexArray* particles = nullptr;
 	CircleShape Blh;
+
+	float G = 6.674E-11;
+	float M = 8E36;
 
 	BlackHole();
 	~BlackHole();
 
-	//void update(float time);
-
 	void phys(float time);
-	void att(VertexArray* partcs);
+
 };

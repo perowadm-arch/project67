@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "BH.h"
+#include "Particles.h"
 #include "Menu.h"
 using namespace sf;
 using namespace std;
@@ -20,6 +21,7 @@ public:
 	Clock clock;
 
 	BlackHole* BH = nullptr;
+	Particle* PRTCS = nullptr;
 
 	Program();
 	~Program();
