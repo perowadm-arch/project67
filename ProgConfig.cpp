@@ -12,6 +12,7 @@ Program::Program(){
     BH = new BlackHole;
     PRTCS = new Particle;
     MN = new Menu;
+    MN->pause = false;
 }
 
 Program::~Program() {
@@ -31,12 +32,8 @@ void Program::drawall() {
 }
 
 void Program::start() {
-
-    MN->pause = false; 
-
     while (window.isOpen())
     {
-        
         float time = clock.getElapsedTime().asSeconds();
         clock.restart();
         sf::Event event;

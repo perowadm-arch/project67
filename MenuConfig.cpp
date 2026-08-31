@@ -56,18 +56,19 @@ void Menu::drawMenu(RenderWindow& window) {
 void Menu::buttons(RenderWindow& window) {
 	Vector2i MousePos = Mouse::getPosition(window);
 
+	static bool wasPressed = false;
+	bool isPressed = Mouse::isButtonPressed(Mouse::Left);
+
 	if (MousePos.x >= 1100 && MousePos.x <= 1180 &&
 		MousePos.y >= 200 && MousePos.y <= 240) {
 
 		buttonPause.setFillColor(Color::Black);
 		BP.setFillColor(Color::White);
 
-		if (Mouse::isButtonPressed(Mouse::Left)) {
-			pause = true;
-
-			
-
-		} 
+		// Срабатывает ТОЛЬКО если сейчас кнопка нажата, а в прошлом кадре была отпущена
+		if (isPressed && !wasPressed) {
+			pause = !pause; // Меняем состояние на противоположное (true на false, false на true)
+		}
 
 	}
 	else {
@@ -90,4 +91,7 @@ void Menu::buttons(RenderWindow& window) {
 		BL.setFillColor(Color::Black);
 
 	}
+
+	wasPressed = isPressed;
+
 }
