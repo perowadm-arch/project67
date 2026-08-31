@@ -22,6 +22,8 @@ public:
 
 	BlackHole* BH = nullptr;
 	Particle* PRTCS = nullptr;
+	Menu* MN = nullptr;
+
 
 	Program();
 	~Program();

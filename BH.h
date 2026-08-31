@@ -12,8 +12,8 @@ public:
 	float currframe;
 	CircleShape Blh;
 
-	float G = 6.674E-11;
-	float M = 8E36;
+	float G = 6.674E-11; 
+	float M = 8E+36; 
 
 	BlackHole();
 	~BlackHole();

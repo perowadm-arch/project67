@@ -11,11 +11,13 @@ Program::Program(){
 	window.create(VideoMode(wwidth, wheight), "Supermassive Black Hole");
     BH = new BlackHole;
     PRTCS = new Particle;
+    MN = new Menu;
 }
 
 Program::~Program() {
     delete BH;
     delete PRTCS;
+    delete MN;
 }
 
 void Program::drawall() {
@@ -23,15 +25,18 @@ void Program::drawall() {
     if (BH != nullptr) {
         window.draw(BH->Blh);
         window.draw(*(PRTCS->particles));
-
+        MN->drawMenu(window);
     }
 	window.display();
 }
 
 void Program::start() {
 
+    MN->pause = false; 
+
     while (window.isOpen())
     {
+        
         float time = clock.getElapsedTime().asSeconds();
         clock.restart();
         sf::Event event;
@@ -39,10 +44,16 @@ void Program::start() {
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                window.close();  
+        }
+       
+        MN->buttons(window);
+        if (MN->pause) {
+            time = 0;
         }
         BH->phys(time);
-        PRTCS->phys(time,BH);
+        PRTCS->phys(time, BH);
         drawall();
+       
     }
 }

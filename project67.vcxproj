@@ -132,14 +132,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BHConfig.cpp" />
     <ClCompile Include="MenuConfig.cpp" />
-    <ClCompile Include="Mouse2Config.cpp" />
     <ClCompile Include="ParticlesConfig.cpp" />
     <ClCompile Include="ProgConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BH.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Mouse2.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Prog.h" />
   </ItemGroup>

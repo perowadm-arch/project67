@@ -7,9 +7,23 @@
 using namespace sf;
 using namespace std;
 
-class Button {
+class Menu {
 public:
-    sf::RectangleShape shape;
-    sf::Text text;
+
+    Menu();
+    ~Menu();
+
+    RectangleShape shape;
+    RectangleShape buttonLight;
+    RectangleShape buttonPause;
+
+    Text BP;
+    Text BL;
+    Font font;
+
+    bool pause;
+    bool light;
     
+    void drawMenu(RenderWindow& window);
+    void buttons(RenderWindow& window);
 };
