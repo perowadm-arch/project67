@@ -8,15 +8,32 @@
 using namespace sf;
 using namespace std;
 
-Particle::Particle() {
+Particle::Particle(BlackHole* BH) {
     particles = new VertexArray(Points, 10000);
     V.resize(particles->getVertexCount());
 
     for (int i = 0; i < particles->getVertexCount(); i++) {
-        (*particles)[i].position = Vector2f((rand()%1280), (rand() % 750));
+
+        float px = rand() % (1480 - (-200)) + (-200);
+        float py = rand() % (1050 - (-200)) + (-200);
+
+        (*particles)[i].position = Vector2f(px, py);
         (*particles)[i].color = Color::White;
 
-        V[i] = Vector2f(30.f, -10.f);
+        float dx = center.x - px;
+        float dy = center.y - py;
+
+        // —читаем точное рассто€ние (гипотенузу)
+        float Dist = sqrt(dx * dx + dy * dy);
+
+        float Dist_real = Dist * MperPixel;
+
+        float v = sqrt((BH->G * BH->M) / Dist_real);
+        float v_pix = v / MperPixel;
+
+        
+        V[i] = Vector2f((dy / Dist) * v_pix, (-dx / Dist) * v_pix);
+        
     }
 }
 
@@ -25,10 +42,6 @@ Particle::~Particle() {
 };
 
 void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
-
-    float MperPixel = 1E+7f;
-
-    Vector2f center = BH->Blh.getPosition();
     Vector2f pos = partcs.position;
 
     float dx = center.x - pos.x;
@@ -36,11 +49,6 @@ void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
 
     // —читаем точное рассто€ние (гипотенузу)
     float Dist = sqrt(dx * dx + dy * dy);
-    if (Dist < 100) {
-        partcs.position = Vector2f(rand() % 1280, rand() % 750);
-        vel = Vector2f(30.f, -10.f);
-        return;
-    }
 
     float Dist_real = Dist * MperPixel;
 
@@ -56,7 +64,6 @@ void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     float ax = (dx / Dist) * a_pixel;
     float ay = (dy / Dist) * a_pixel;
 
-
     vel.x += ax * time;
     vel.y += ay * time;
 
@@ -64,11 +71,36 @@ void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     partcs.position.x += vel.x * time;
     partcs.position.y += vel.y * time;
 
+    if (Dist < 100) {
+
+        float factor = (100.f / Dist) * (100.f / Dist);
+        float a_pix_s = a_pixel * factor;
+
+        float Ax = (dx / Dist) * a_pix_s;
+        float Ay = (dy / Dist) * a_pix_s;
+
+        vel.x += Ax * time;
+        vel.y += Ay * time;
+
+        if (Dist < 50){
+            partcs.position = Vector2f(-9999.f, -9999.f);
+        vel = Vector2f(0, 0);
+    }
+        return;
+    }
 
 }
 
 void Particle::phys(float time, BlackHole* BH) {
+
     for (int i = 0; i < particles->getVertexCount(); i++) {
         att((*particles)[i], V[i], BH, time);
     }
+}
+
+
+//-----------------------------------------------------------LIGHT
+
+Light::Light() { 
+     
 }

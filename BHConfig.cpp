@@ -14,7 +14,7 @@ BlackHole::BlackHole() {
     Blh.setPosition(400.f, 370.f);
     Blh.setFillColor(Color::Black);
     Blh.setOutlineColor(Color::White);
-    Blh.setOutlineThickness(1.f);
+    Blh.setOutlineThickness(0.1);
 }; 
 
 BlackHole::~BlackHole() {

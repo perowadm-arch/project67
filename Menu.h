@@ -26,4 +26,5 @@ public:
     
     void drawMenu(RenderWindow& window);
     void buttons(RenderWindow& window);
+    
 };

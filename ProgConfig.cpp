@@ -10,7 +10,7 @@ using namespace std;
 Program::Program(){
 	window.create(VideoMode(wwidth, wheight), "Supermassive Black Hole");
     BH = new BlackHole;
-    PRTCS = new Particle;
+    PRTCS = new Particle(BH);
     MN = new Menu;
     MN->pause = false;
 }
