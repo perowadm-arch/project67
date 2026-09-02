@@ -13,6 +13,8 @@ Program::Program(){
     PRTCS = new Particle(BH);
     MN = new Menu;
     MN->pause = false;
+    MN->light = false;
+    LIGHT = new Light(MN);
 }
 
 Program::~Program() {
@@ -26,6 +28,7 @@ void Program::drawall() {
     if (BH != nullptr) {
         window.draw(BH->Blh);
         window.draw(*(PRTCS->particles));
+        window.draw(*(LIGHT->particles));
         MN->drawMenu(window);
     }
 	window.display();
@@ -50,6 +53,7 @@ void Program::start() {
         }
         BH->phys(time);
         PRTCS->phys(time, BH);
+        LIGHT->phys(time, BH);
         drawall();
        
     }

@@ -23,6 +23,8 @@ public:
 
     bool pause;
     bool light;
+
+
     
     void drawMenu(RenderWindow& window);
     void buttons(RenderWindow& window);

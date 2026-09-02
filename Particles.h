@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "BH.h"
+#include "Menu.h"
 using namespace sf;
 using namespace std;
 
@@ -23,18 +24,19 @@ public:
 	Particle(BlackHole* BH);
 	~Particle();
 
-	void phys(float time, BlackHole* BH);
-	void att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time);
+	virtual void phys(float time, BlackHole* BH);
+	virtual void att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time);
 };
 
 class Light : public Particle {
 public:
-	Light();
+	Light(Menu* MN);
 	~Light();
-
 
 	float c = 3E+8;
 	bool on;
 
+	void phys(float time, BlackHole* BH);
+	void att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time);
 	void direction(RenderWindow& window);
 };
