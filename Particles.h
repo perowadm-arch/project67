@@ -19,7 +19,9 @@ public:
 	float m = 4E-36; 
 	float MperPixel = 1E+7f;
 	Vector2f center = Vector2f(400, 370);
-	
+
+
+
 	Particle();
 	Particle(BlackHole* BH);
 	~Particle();
@@ -36,6 +38,7 @@ public:
 	float c = 3E+8;
 	float c_pix = c / MperPixel;
 	bool on;
+	float tail = 2;
 
 	void phys(float time, BlackHole* BH);
 	void att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time);
