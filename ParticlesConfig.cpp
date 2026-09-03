@@ -106,30 +106,23 @@ void Particle::phys(float time, BlackHole* BH) {
 
 //-----------------------------------------------------------LIGHT
 
-Light::Light(Menu* MN) : Particle() {
+Light::Light() : Particle() {
 
-    particles = new VertexArray(Points, 10000);
+    particles = new VertexArray(Points, 1000);
     V.resize(particles->getVertexCount());
 
-
-    if (on) {
         for (int i = 0; i < particles->getVertexCount(); i++) {
-            (*particles)[i].position = Vector2f(1000+i, 375+i);
+            (*particles)[i].position = Vector2f(1000, 375);
             (*particles)[i].color = Color::Yellow;
-
-            Vector2f pos = Vector2f(1000, 375 + i*0.0f);
-            float dx = center.x - pos.x;
-            float dy = center.y - pos.y;
-            float Dist = sqrt(dx * dx + dy * dy);
-            float c_pix = c / MperPixel;
-            V[i] = Vector2f((dy / Dist) * c_pix, (-dx / Dist) * c_pix);
+            V[i] = Vector2f(0.f, 0.f);
         }
-    }
 
+        (*particles)[0].position = Vector2f(1000, 375);
+        V[0] = Vector2f(-c_pix, 0.f);
 }
 
 Light::~Light() {
-    delete particles;
+
 }
 
 void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
@@ -174,7 +167,8 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
         vel.y += Ay * time;
 
         if (Dist < 50) {
-            partcs.position = Vector2f(-9999.f, -9999.f);
+            partcs.position = Vector2f(-9999, -9999);
+            //vel = Vector2f((-dx / Dist) * c_pix, (dy / Dist) * c_pix);
             vel = Vector2f(0, 0);
         }
         return;
@@ -184,9 +178,25 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
 
 void Light::phys(float time, BlackHole* BH) {
 
-    for (int i = 0; i < particles->getVertexCount(); i++) {
-        att((*particles)[i], V[i], BH, time);
-    }
+   
+
+        Vector2f curr_pos;
+
+        for (int k = 0; k < particles->getVertexCount(); k++) {
+
+            curr_pos = (*particles)[0].position;
+            float dx = center.x - curr_pos.x;
+            float dy = center.y - curr_pos.y;
+            float Dist = sqrt(dx * dx + dy * dy);
+            V[0] = Vector2f((-dx / Dist) * c_pix, (dy / Dist) * c_pix);
+
+            for (int i = 1; i < particles->getVertexCount(); i++) {
+                (*particles)[k].position = curr_pos;
+                V[k] = Vector2f(0, 0);
+                att((*particles)[i], V[i], BH, time);
+            }
+        }
+        
 }
 
 void Light::direction(RenderWindow& window) {

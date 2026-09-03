@@ -14,13 +14,14 @@ Program::Program(){
     MN = new Menu;
     MN->pause = false;
     MN->light = false;
-    LIGHT = new Light(MN);
+    LIGHT = new Light();
 }
 
 Program::~Program() {
     delete BH;
     delete PRTCS;
     delete MN;
+    delete LIGHT;
 }
 
 void Program::drawall() {

@@ -30,10 +30,11 @@ public:
 
 class Light : public Particle {
 public:
-	Light(Menu* MN);
+	Light();
 	~Light();
 
 	float c = 3E+8;
+	float c_pix = c / MperPixel;
 	bool on;
 
 	void phys(float time, BlackHole* BH);
