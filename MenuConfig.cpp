@@ -20,6 +20,7 @@ Menu::Menu() {
 	if (font.loadFromFile("STENCIL.TTF")) {
 		BP.setFont(font);
 		BL.setFont(font);
+		degree.setFont(font);
 	}
 	BP.setString("pause");
 	BP.setFillColor(Color::Black);
@@ -35,6 +36,20 @@ Menu::Menu() {
 	BL.setFillColor(Color::Black);
 	BL.setPosition(1110, 310);
 	BL.setCharacterSize(18);
+
+	line.setPosition(1135, 400);
+	line.setSize(Vector2f(5.f, 200.f));
+	line.setFillColor(Color::Black);
+	degreeSlider.setPosition(1130, 500);
+	degreeSlider.setSize(Vector2f(15.f, 10.f));
+    degreeSlider.setOutlineColor(Color::Black);
+    degreeSlider.setOutlineThickness(2.f);
+	degreeSlider.setFillColor(Color::White);
+	//degree.setString("0");
+	//degree.setFillColor(Color::Black);
+	//degree.setPosition(1130, 450);
+	//degree.setCharacterSize(15);
+
 }
 
 Menu::~Menu() {
@@ -50,6 +65,10 @@ void Menu::drawMenu(RenderWindow& window) {
 
 	window.draw(buttonLight);
 	window.draw(BL);
+
+	window.draw(line);
+	window.draw(degreeSlider);
+	//window.draw(degree);
 
 };
 
@@ -99,5 +118,23 @@ void Menu::buttons(RenderWindow& window) {
 
 	wasPressed_L = isPressed_L;
 	wasPressed_P = isPressed_P;
+
+	Vector2f slidepos = degreeSlider.getPosition();
+	Vector2f slidesize = degreeSlider.getSize();
+
+	if (MousePos.x >= slidepos.x && MousePos.x <= slidepos.x + slidesize.x
+		&& MousePos.y >= slidepos.y && MousePos.y <= slidepos.y + slidesize.y) {
+		degreeSlider.setFillColor(Color::Black);	
+	}
+	else {
+		degreeSlider.setFillColor(Color::White);
+	}
+
+	if (MousePos.x >= 1120 && MousePos.x <= 1150
+		&& MousePos.y >= 400 && MousePos.y <= 600) {		
+		if (Mouse::isButtonPressed(Mouse::Left)) {
+		degreeSlider.setPosition(1130, MousePos.y - 5);
+		}
+	}
 
 }

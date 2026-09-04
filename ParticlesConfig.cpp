@@ -142,7 +142,7 @@ Light::Light() : Particle() {
         float dy = center.y - curr_pos.y;
         float Dist = sqrt(dx * dx + dy * dy);
 
-        V[k] = Vector2f(((dx / Dist) * (c_pix*5)), -((dy / Dist) * (c_pix*5)));
+        V[k] = Vector2f(((dx / Dist) * (c_pix*5)), ((-dy / Dist) * (c_pix*5)));
         //V[k] = Vector2f(-10.f, 0.f);
 
     }
@@ -213,7 +213,7 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
 
 void Light::phys(float time, BlackHole* BH) {
 
-    float x_part = particles->getVertexCount() / 10.f;
+    float x_part = (particles->getVertexCount()-10) / 10.f;
 
     for (int i = 0; i < 9; i++) {
         att((*particles)[i], V[i], BH, time);
@@ -224,9 +224,9 @@ void Light::phys(float time, BlackHole* BH) {
         float ty = curr_pos.y - (*particles)[tail - 1].position.y;
         float Pyphagor = sqrt(tx * tx + ty * ty);
 
-        if (tail < x_part && Pyphagor > 1.f) {
+        if (tail < x_part && Pyphagor > 0.5f) {
             (*particles)[tail].position = curr_pos;
-            V[tail] = Vector2f(0, 0);
+            //V[tail] = Vector2f(0, 0);
             tail++;
         }
         else {             
