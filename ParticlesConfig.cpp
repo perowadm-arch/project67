@@ -129,15 +129,31 @@ void Particle::phys(float time, BlackHole* BH) {
 
 Light::Light() : Particle() {
 
-    particles = new VertexArray(Points, 1000);
+    particles = new VertexArray(Points, 50000);
     V.resize(particles->getVertexCount());
 
-        for (int i = 0; i < particles->getVertexCount(); i++) {
-            (*particles)[i].position = Vector2f(1000, 375);
-            (*particles)[i].color = Color::Yellow;
+    for (int k = 0; k < 9; k++) {
+
+        (*particles)[k].position = Vector2f(1100, 375 + k);
+        (*particles)[k].color = Color::Red;
+        Vector2f curr_pos = (*particles)[k].position;
+
+        float dx = center.x - curr_pos.x;
+        float dy = center.y - curr_pos.y;
+        float Dist = sqrt(dx * dx + dy * dy);
+
+        V[k] = Vector2f(((dx / Dist) * (c_pix*5)), -((dy / Dist) * (c_pix*5)));
+        //V[k] = Vector2f(-10.f, 0.f);
+
+    }
+
+    for (int i = 10; i < particles->getVertexCount(); i++) {
+      (*particles)[i].position = Vector2f(1000, 375);
+      (*particles)[i].color = Color::Yellow;
             
-            V[i] = Vector2f(0.f, 0.f);
-        }
+      V[i] = Vector2f(0.f, 0.f);
+    }
+
 }
 
 Light::~Light() {
@@ -174,7 +190,7 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     partcs.position.x += vel.x * time;
     partcs.position.y += vel.y * time;
 
-    if (Dist < 300) {
+    if (Dist < 100) {
 
         float factor = (100.f / Dist) * (100.f / Dist);
         float a_pix_s = a_pixel * factor;
@@ -197,32 +213,31 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
 
 void Light::phys(float time, BlackHole* BH) {
 
+    float x_part = particles->getVertexCount() / 10.f;
 
+    for (int i = 0; i < 9; i++) {
+        att((*particles)[i], V[i], BH, time);
 
-        Vector2f curr_pos = (*particles)[0].position;
-        float dx = center.x - curr_pos.x;
-        float dy = center.y - curr_pos.y;
-        float Dist = sqrt(dx * dx + dy * dy);
-        //V[0] = Vector2f((-dx / Dist) * c_pix, (dy / Dist) * c_pix);
-        V[0] = Vector2f(-50.f, 0.f);
-
-
-        att((*particles)[0], V[0], BH, time);
-
+        Vector2f curr_pos = (*particles)[i].position;
 
         float tx = curr_pos.x - (*particles)[tail - 1].position.x;
         float ty = curr_pos.y - (*particles)[tail - 1].position.y;
         float Pyphagor = sqrt(tx * tx + ty * ty);
 
-    if (tail < particles->getVertexCount() && Pyphagor > 5.f) {
-    (*particles)[tail].position = curr_pos;
-    V[tail] = Vector2f(0, 0);
-    tail++;
+        if (tail < x_part && Pyphagor > 1.f) {
+            (*particles)[tail].position = curr_pos;
+            V[tail] = Vector2f(0, 0);
+            tail++;
+        }
+        else {             
+            x_part += x_part;
+        }
+
     }
-    
 }
 
 void Light::direction(RenderWindow& window) {
+
 
 
 };

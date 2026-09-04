@@ -12,12 +12,12 @@ using namespace std;
 class Particle {
 public:
 	bool pause;
-	float currframe;
+	float currframe = 0;
 	VertexArray* particles = nullptr;
 	vector<Vector2f> V;
 
 	float m = 4E-36; 
-	float MperPixel = 1E+7f;
+	float MperPixel = 0.5E+7f;
 	Vector2f center = Vector2f(400, 370);
 
 
@@ -38,7 +38,7 @@ public:
 	float c = 3E+8;
 	float c_pix = c / MperPixel;
 	bool on;
-	float tail = 2;
+	float tail = 10;
 
 	void phys(float time, BlackHole* BH);
 	void att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time);
