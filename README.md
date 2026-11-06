@@ -1,0 +1,1 @@
+This is somthing like a very simple 2d physics simulation. The object of the simulation is a black hole and a light ray, to observe how the light can be distorted with the influence of bh gravitational field.
