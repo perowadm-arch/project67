@@ -38,17 +38,17 @@ Menu::Menu() {
 	BL.setCharacterSize(18);
 
 	line.setPosition(1135, 400);
-	line.setSize(Vector2f(5.f, 200.f));
+	line.setSize(Vector2f(5.f, 181.f));
 	line.setFillColor(Color::Black);
-	degreeSlider.setPosition(1130, 500);
+	degreeSlider.setPosition(1130, 490);
 	degreeSlider.setSize(Vector2f(15.f, 10.f));
     degreeSlider.setOutlineColor(Color::Black);
     degreeSlider.setOutlineThickness(2.f);
 	degreeSlider.setFillColor(Color::White);
-	//degree.setString("0");
-	//degree.setFillColor(Color::Black);
-	//degree.setPosition(1130, 450);
-	//degree.setCharacterSize(15);
+	degree.setString("0");
+	degree.setFillColor(Color::Black);
+	degree.setPosition(1125, 590);
+	degree.setCharacterSize(25);
 
 }
 
@@ -68,7 +68,7 @@ void Menu::drawMenu(RenderWindow& window) {
 
 	window.draw(line);
 	window.draw(degreeSlider);
-	//window.draw(degree);
+	window.draw(degree);
 
 };
 
@@ -131,10 +131,10 @@ void Menu::buttons(RenderWindow& window) {
 	}
 
 	if (MousePos.x >= 1120 && MousePos.x <= 1150
-		&& MousePos.y >= 400 && MousePos.y <= 600) {		
+		&& MousePos.y >= 400 && MousePos.y <= 581) {		
 		if (Mouse::isButtonPressed(Mouse::Left)) {
 		degreeSlider.setPosition(1130, MousePos.y - 5);
+		
 		}
 	}
-
 }

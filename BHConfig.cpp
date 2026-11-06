@@ -22,5 +22,5 @@ BlackHole::~BlackHole() {
 };
 
 void BlackHole::phys(float time) {
-    Blh.rotate(10 * time);
+    //Blh.rotate(10 * time);
 }

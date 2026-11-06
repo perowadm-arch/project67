@@ -4,10 +4,18 @@
 #include <iostream>
 #include <cmath>
 #include "Particles.h"
+#include "Consts.h"
 #include "BH.h"
 #include "Menu.h"
 using namespace sf;
 using namespace std;
+
+//float Particle::rk4(Vertex& partcs, Vector2f& vel, float h) {
+//    Vector2f pos = partcs.position;
+//
+//    
+//
+//}
 
 Particle::Particle() {
 
@@ -37,7 +45,7 @@ Particle::Particle(BlackHole* BH) {
 
         float Dist_real = Dist * MperPixel;
 
-        float v = sqrt((BH->G * BH->M) / Dist_real);
+        float v = sqrt((G * BH->M) / Dist_real);
         float v_pix = v / MperPixel;
 
         
@@ -77,7 +85,7 @@ void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     float Dist_real = Dist * MperPixel;
 
     //F = G * (M * m) / r^2
-    float F = BH->G * ((BH->M * this->m) / (Dist_real * Dist_real));
+    float F = G * ((BH->M * this->m) / (Dist_real * Dist_real));
 
     //a = F / m (”скорение)
     float a = F / this->m;
@@ -88,6 +96,7 @@ void Particle::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     float ax = (dx / Dist) * a_pixel;
     float ay = (dy / Dist) * a_pixel;
 
+    //метод Ёйлера
     vel.x += ax * time;
     vel.y += ay * time;
 
@@ -134,21 +143,21 @@ Light::Light() : Particle() {
 
     for (int k = 0; k < 9; k++) {
 
-        (*particles)[k].position = Vector2f(1100, 375 + k);
-        (*particles)[k].color = Color::Red;
+        (*particles)[k].position = Vector2f(1100, 365 + k);
+        (*particles)[k].color = Color::Green;
         Vector2f curr_pos = (*particles)[k].position;
 
         float dx = center.x - curr_pos.x;
         float dy = center.y - curr_pos.y;
         float Dist = sqrt(dx * dx + dy * dy);
 
-        V[k] = Vector2f(((dx / Dist) * (c_pix*5)), ((-dy / Dist) * (c_pix*5)));
+        V[k] = Vector2f(((dx / Dist) * (c_pix)), ((-dy / Dist) * (c_pix)));
         //V[k] = Vector2f(-10.f, 0.f);
 
     }
 
     for (int i = 10; i < particles->getVertexCount(); i++) {
-      (*particles)[i].position = Vector2f(1000, 375);
+      (*particles)[i].position = Vector2f(1000, 365);
       (*particles)[i].color = Color::Yellow;
             
       V[i] = Vector2f(0.f, 0.f);
@@ -165,6 +174,7 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
 
     float dx = center.x - pos.x;
     float dy = center.y - pos.y;
+    //float dy = 0;
 
     // —читаем точное рассто€ние (гипотенузу)
     float Dist = sqrt(dx * dx + dy * dy);
@@ -172,7 +182,7 @@ void Light::att(Vertex& partcs, Vector2f& vel, BlackHole* BH, float time) {
     float Dist_real = Dist * MperPixel;
 
     //F = G * (M * m) / r^2
-    float F = BH->G * ((BH->M * this->m) / (Dist_real * Dist_real));
+    float F = G * ((BH->M * this->m) / (Dist_real * Dist_real));
 
     //a = F / m (”скорение)
     float a = F / this->m;
@@ -217,6 +227,8 @@ void Light::phys(float time, BlackHole* BH) {
 
     for (int i = 0; i < 9; i++) {
         att((*particles)[i], V[i], BH, time);
+
+
 
         Vector2f curr_pos = (*particles)[i].position;
 

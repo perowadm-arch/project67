@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BH.h" />
+    <ClInclude Include="Consts.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Prog.h" />
